@@ -1,0 +1,68 @@
+#include <iostream>
+#include <queue>
+#include <string>
+#include <sstream>
+#include <list>
+
+using namespace std;
+
+int main() {
+    int n_nodes, node_1, node_2, node, queryLevel, result;
+    queue<int> q;
+    string thisLine;
+	
+	cin >> n_nodes;	
+	bool visited[n_nodes];
+	int level[n_nodes];
+	
+	list<int> A[n_nodes];
+	
+	while(!cin.eof())
+	{
+	    cin >> node_1;
+	    
+	    if(!cin.eof())
+	        cin >> node_2;
+	    else
+	    {
+	        queryLevel = node_1;
+	        break;
+	    }
+    
+	    A[node_1 - 1].push_front(node_2);
+	    A[node_2 - 1].push_front(node_1);
+	}
+	
+	q.push(1);
+	level[0] = 0;
+	
+	for(int i = 0; i < n_nodes; i++)
+	{
+	    level[i] = false;
+	    visited[i] = 0;
+	}
+	
+	visited[0] = 1;
+	
+	while(!q.empty())
+	{
+	    node = q.front();
+	    q.pop();
+	    for(int i : A[node - 1])
+	    {
+	        if(visited[i - 1] == false)
+	        {
+	            level[i - 1] = level[node - 1] + 1;
+	            q.push(i);
+	            visited[i - 1] = true;
+	        }
+	    }
+	}
+	
+	for(int i : level)
+	    if(i == queryLevel - 1)
+	        result ++;
+	        
+	cout << result;
+    return 0;
+}
