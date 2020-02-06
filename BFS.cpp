@@ -63,4 +63,3 @@ int detLevel(int n_Nodes, list<int> A[], bool v[])
     }
     return level[n_Nodes - 1];
 }
-Language: C++
